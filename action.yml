@@ -1,4 +1,4 @@
-name: 'izuna'
+name: 'izuna-action'
 description: 'Run izuna'
 inputs:
   who-to-greet:  # id of input
