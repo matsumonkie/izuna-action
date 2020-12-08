@@ -16,10 +16,10 @@ async function run() {
     const payload = github.context.payload;
     console.log(payload);
     var project = {
-      owner: payload.repository.owner.name,
-      repo: payload.repository.name,
-      packageName: core.getInput('packageName'),
-      commitId: payload.pull_request.sha
+      user: core.getInput("owner"),
+      repo: core.getInput("repository"),
+      packageName: core.getInput('package'),
+      commitId: payload.pull_request.head.sha
     };
     console.log(`project: ${JSON.stringify(project)}`);
 

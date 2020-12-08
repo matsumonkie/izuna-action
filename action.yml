@@ -1,7 +1,13 @@
 name: 'izuna-action'
 description: 'Run izuna'
 inputs:
-  packageName:
+  owner:
+    description: 'owner of the repository'
+    required: true
+  repository:
+    description: 'Name of the repository'
+    required: true
+  package:
     description: 'Name of the package'
     required: true
   ghcVersion:
