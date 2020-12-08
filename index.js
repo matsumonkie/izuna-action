@@ -19,7 +19,7 @@ async function run() {
       owner: payload.repository.owner.name,
       repo: payload.repository.name,
       packageName: core.getInput('packageName'),
-      commitId: payload.head_commit.id
+      commitId: payload.pull_request.sha;
     };
     console.log(`project: ${JSON.stringify(project)}`);
 
