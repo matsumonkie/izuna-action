@@ -33,6 +33,7 @@ async function run() {
       const izunaBuilderExeFullPath = binDir + '/' + izunaBuilderExe
       console.log("0");
       console.log(izunaBuilderExeFullPath);
+      await exec.exec('ls', []);
       console.log("1");
       await tc.downloadTool(izunaBuilderUrl, izunaBuilderExeFullPath);
 
