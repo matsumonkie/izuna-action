@@ -2,6 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const tc = require('@actions/tool-cache');
 const io = require('@actions/io');
+const exec = require('@actions/exec');
 
 async function run() {
   try {
@@ -29,11 +30,21 @@ async function run() {
       console.log(`izuna builder url: ${izunaBuilderUrl}`);
       const binDir = "bin";
       await tc.downloadTool(izunaBuilderUrl, binDir);
+      exec.exec('chmod', ['+x', binDir + izunaBuilderUrl], { silent: true });
       const cachedPath = await tc.cacheFile(binDir, izunaBuilderExe, izunaBuilderExe, izunaBuilderVersion);
       core.addPath(cachedPath);
     } else {
       core.addPath(cacheDir);
     }
+
+    await exec.exec(izunaBuilderExe,
+                    [ '--hie-directory=.',
+                      '--user=' + project.user,
+                      '--repo=' + project.repo,
+                      '--package=' + project.packageName,
+                      '--commit=' + project.commitId
+                    ]
+                   );
 
   } catch (error) {
     core.setFailed(error.message);
