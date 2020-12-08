@@ -5,9 +5,10 @@ inputs:
     description: 'Name of the package'
     required: true
     default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  ghcVersion:
+    description: 'Version of Ghc used'
+    required: true
+    default: 'World'
 runs:
   using: 'node12'
   main: 'index.js'
