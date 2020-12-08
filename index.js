@@ -8,10 +8,10 @@ try {
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = github.context.payload;
   console.log(`payload: ${payload}`);
-  console.log(`owner: ${payload.owner}`);
+  console.log(`owner: ${payload.repository.owner}`);
 
   var project = {
-    owner: payload.owner.name,
+    owner: payload.repository.owner.name,
     repo: payload.repository.name,
     packageName: core.getInput('packageName'),
     commitId: payload.head_commit.id
