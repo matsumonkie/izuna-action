@@ -1,8 +1,8 @@
 name: 'izuna-action'
 description: 'Run izuna'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  packageName:
+    description: 'Name of the package'
     required: true
     default: 'World'
 outputs:
