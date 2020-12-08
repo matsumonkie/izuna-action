@@ -2,7 +2,7 @@ name: 'izuna-action'
 description: 'Run izuna'
 inputs:
   owner:
-    description: 'owner of the repository'
+    description: 'Owner of the repository'
     required: true
   repository:
     description: 'Name of the repository'
