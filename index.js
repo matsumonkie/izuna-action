@@ -7,6 +7,8 @@ try {
 
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = github.context.payload;
+  console.log(`payload: ${payload}`);
+  console.log(`owner: ${payload.owner}`);
 
   var project = {
     owner: payload.owner.name,
