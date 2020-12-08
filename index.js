@@ -33,7 +33,7 @@ async function run() {
       const izunaBuilderExeFullPath = binDir + '/' + izunaBuilderExe
       console.log("0");
       console.log(izunaBuilderExeFullPath);
-      await exec.exec('ls', []);
+      await exec.exec('ls', [".hie/"]);
       console.log("1");
       await tc.downloadTool(izunaBuilderUrl, izunaBuilderExeFullPath);
 
@@ -49,7 +49,8 @@ async function run() {
 
     console.log("5");
     const hieDirectory = core.getInput('hieDirectory');
-    await exec.exec(izunaBuilderExe,
+    await exec.exec('ls', ["bin"]);
+    await exec.exec(izunaBuilderExeFullPath,
                     [ '--hie-directory=' + hieDirectory,
                       '--user=' + project.user,
                       '--repo=' + project.repo,
