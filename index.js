@@ -38,7 +38,7 @@ async function run() {
       console.log("2");
       await exec.exec('chmod', [ '+x', izunaBuilderExeFullPath ], { silent: true });
       console.log("3");
-      const cachedPath = await tc.cacheFile(binDir, izunaBuilderExe, izunaBuilderExe, izunaBuilderVersion);
+      const cachedPath = await tc.cacheFile(izunaBuilderExeFullPath, izunaBuilderExe, izunaBuilderExe, izunaBuilderVersion);
       console.log("4");
       core.addPath(cachedPath);
     } else {
