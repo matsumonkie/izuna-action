@@ -29,13 +29,13 @@ async function run() {
       const izunaBuilderUrl = "https://github.com/matsumonkie/izuna/releases/download/" + izunaBuilderVersion + "/" + izunaBuilderExe;
       console.log(`izuna builder url: ${izunaBuilderUrl}`);
       const binDir = "./bin";
-      await tc.downloadTool(izunaBuilderUrl, binDir);
-      console.log(binDir + '/' + izunaBuilderExe);
+      const izunaBuilderExeFullPath = binDir + '/' + izunaBuilderExe
+      await tc.downloadTool(izunaBuilderUrl, izunaBuilderExeFullPath);
 
       console.log ("AAA");
       let myOutput = ''
       const options = { listeners: { stdout: (data) => { myOutput += data.toString() } } };
-      await exec.exec('ls', [binDir], options);
+      await exec.exec('ls', [ binDir ], options);
       console.log("res1: " + myOutput);
 
       let myOutput2 = "";
@@ -50,7 +50,7 @@ async function run() {
 
       console.log ("BBB");
 
-      exec.exec('chmod', ['+x', binDir + '/' + izunaBuilderExe], { silent: true });
+      exec.exec('chmod', [ '+x', izunaBuilderExeFullPath ], { silent: true });
       const cachedPath = await tc.cacheFile(binDir, izunaBuilderExe, izunaBuilderExe, izunaBuilderVersion);
       core.addPath(cachedPath);
     } else {
