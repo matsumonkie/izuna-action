@@ -28,16 +28,28 @@ async function run() {
     if (cacheDir === '') {
       const izunaBuilderUrl = "https://github.com/matsumonkie/izuna/releases/download/" + izunaBuilderVersion + "/" + izunaBuilderExe;
       console.log(`izuna builder url: ${izunaBuilderUrl}`);
-      const binDir = "bin";
+      const binDir = "./bin";
       await tc.downloadTool(izunaBuilderUrl, binDir);
       console.log(binDir + '/' + izunaBuilderExe);
+
+      console.log ("AAA");
       let myOutput = ''
       const options = { listeners: { stdout: (data) => { myOutput += data.toString() } } };
       exec.exec('ls', [binDir], options);
       console.log("res1: " + myOutput);
-      myOutput = "";
-      exec.exec('ls', [binDir + "/*"], options);
-      console.log("res2: " + myOutput);
+
+      let myOutput2 = "";
+      const options2 = { listeners: { stdout: (data) => { myOutput2 += data.toString() } } };
+      exec.exec('ls', ["."], options2);
+      console.log("res2: " + myOutput2);
+
+      let myOutput3 = "";
+      const options3 = { listeners: { stdout: (data) => { myOutput3 += data.toString() } } };
+      exec.exec('ls', [binDir + "/*"], options3);
+      console.log("res3: " + myOutput3);
+
+      console.log ("BBB");
+
       exec.exec('chmod', ['+x', binDir + '/' + izunaBuilderExe], { silent: true });
       const cachedPath = await tc.cacheFile(binDir, izunaBuilderExe, izunaBuilderExe, izunaBuilderVersion);
       core.addPath(cachedPath);
