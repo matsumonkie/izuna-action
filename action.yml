@@ -4,11 +4,13 @@ inputs:
   packageName:
     description: 'Name of the package'
     required: true
-    default: 'World'
   ghcVersion:
     description: 'Version of Ghc used'
     required: true
-    default: 'World'
+  hieDirectory:
+    description: 'Where the hie files are stored'
+    required: true
+    default: '.hie'
 runs:
   using: 'node12'
   main: 'index.js'

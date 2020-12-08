@@ -45,14 +45,18 @@ async function run() {
       core.addPath(cacheDir);
     }
 
+    console.log("5");
+    const hieDirectory = core.getInput('hieDirectory');
     await exec.exec(izunaBuilderExe,
-                    [ '--hie-directory=.',
+                    [ '--hie-directory=' + hieDirectory,
                       '--user=' + project.user,
                       '--repo=' + project.repo,
                       '--package=' + project.packageName,
                       '--commit=' + project.commitId
                     ]
                    );
+
+    console.log("yeah!!");
 
   } catch (error) {
     core.setFailed(error.message);
