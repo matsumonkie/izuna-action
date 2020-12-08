@@ -30,7 +30,8 @@ async function run() {
       console.log(`izuna builder url: ${izunaBuilderUrl}`);
       const binDir = "bin";
       await tc.downloadTool(izunaBuilderUrl, binDir);
-      exec.exec('chmod', ['+x', binDir + izunaBuilderUrl], { silent: true });
+      console.log(binDir + izunaBuilderExe);
+      exec.exec('chmod', ['+x', binDir + + izunaBuilderExe], { silent: true });
       const cachedPath = await tc.cacheFile(binDir, izunaBuilderExe, izunaBuilderExe, izunaBuilderVersion);
       core.addPath(cachedPath);
     } else {
