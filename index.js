@@ -14,6 +14,7 @@ async function run() {
 
     // Get the JSON webhook payload for the event that triggered the workflow
     const payload = github.context.payload;
+    console.log("1");
     var project = {
       owner: payload.repository.owner.name,
       repo: payload.repository.name,
