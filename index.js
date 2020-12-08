@@ -32,7 +32,7 @@ async function run() {
       await tc.downloadTool(izunaBuilderUrl, binDir);
       console.log(binDir + '/' + izunaBuilderExe);
       let myOutput = ''
-      const options = { listeners: { stdout: (data: Buffer) => { myOutput += data.toString() } } };
+      const options = { listeners: { stdout: (data) => { myOutput += data.toString() } } };
       exec.exec('ls', [binDir], options);
       console.log("res1: " + myOutput);
       myOutput = "";
