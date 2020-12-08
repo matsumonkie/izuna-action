@@ -35,17 +35,17 @@ async function run() {
       console.log ("AAA");
       let myOutput = ''
       const options = { listeners: { stdout: (data) => { myOutput += data.toString() } } };
-      exec.exec('ls', [binDir], options);
+      await exec.exec('ls', [binDir], options);
       console.log("res1: " + myOutput);
 
       let myOutput2 = "";
       const options2 = { listeners: { stdout: (data) => { myOutput2 += data.toString() } } };
-      exec.exec('ls', ["."], options2);
+      await exec.exec('ls', ["."], options2);
       console.log("res2: " + myOutput2);
 
       let myOutput3 = "";
       const options3 = { listeners: { stdout: (data) => { myOutput3 += data.toString() } } };
-      exec.exec('ls', [binDir + "/*"], options3);
+      await exec.exec('ls', [binDir + "/*"], options3);
       console.log("res3: " + myOutput3);
 
       console.log ("BBB");
