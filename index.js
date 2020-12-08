@@ -1,3 +1,5 @@
+import * as path from 'path';
+
 const core = require('@actions/core');
 const github = require('@actions/github');
 const tc = require('@actions/tool-cache');
@@ -25,32 +27,34 @@ async function run() {
 
     /* check if we already have izuna-builder in the cache */
     const izunaBuilderExe = "izuna-builder-exe-ghc-" + ghcVersion;
+    const binDir = "./bin";
+    const izunaBuilderExeFullPath = path.join(binDir, izunaBuilderExe);
+    console.log(izunaBuilderExeFullPath);
+
     const cacheDir = tc.find(izunaBuilderExe, izunaBuilderVersion);
     if (cacheDir === '') {
+      console.log("0");
       const izunaBuilderUrl = "https://github.com/matsumonkie/izuna/releases/download/" + izunaBuilderVersion + "/" + izunaBuilderExe;
       console.log(`izuna builder url: ${izunaBuilderUrl}`);
-      const binDir = "./bin";
-      const izunaBuilderExeFullPath = binDir + '/' + izunaBuilderExe
-      console.log("0");
-      console.log(izunaBuilderExeFullPath);
-      await exec.exec('ls', [".hie/"]);
-      console.log("1");
-      await tc.downloadTool(izunaBuilderUrl, izunaBuilderExeFullPath);
 
-      console.log("2");
+      await tc.downloadTool(izunaBuilderUrl, izunaBuilderExeFullPath);
+      console.log("1");
+
       await exec.exec('chmod', [ '+x', izunaBuilderExeFullPath ], { silent: true });
-      console.log("3");
+      console.log("2");
       const cachedPath = await tc.cacheFile(izunaBuilderExeFullPath, izunaBuilderExe, izunaBuilderExe, izunaBuilderVersion);
-      console.log("4");
+      console.log("3");
       core.addPath(cachedPath);
+      console.log("4");
     } else {
       core.addPath(cacheDir);
     }
 
-    console.log("5");
     const hieDirectory = core.getInput('hieDirectory');
+    console.log("5");
     await exec.exec('ls', ["bin"]);
-    await exec.exec("bin/" + izunaBuilderExe,
+    await exec.exec('pwd', []);
+    await exec.exec(izunaBuilderExeFullPath,
                     [ '--hie-directory=' + hieDirectory,
                       '--user=' + project.user,
                       '--repo=' + project.repo,
