@@ -27,8 +27,7 @@ async function run() {
     if (cacheDir === '') {
       const izunaBuilderUrl = "https://github.com/matsumonkie/izuna/releases/download/" + izunaBuilderVersion + "/" + izunaBuilderExe;
       console.log(`izuna builder url: ${izunaBuilderUrl}`);
-      const binDir = "izunaBin";
-      await io.mkdirP(binDir);
+      const binDir = "bin";
       await tc.downloadTool(izunaBuilderUrl, binDir);
       const cachedPath = await tc.cacheFile(binDir, izunaBuilderExe, izunaBuilderExe, izunaBuilderVersion);
       core.addPath(cachedPath);
