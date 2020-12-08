@@ -31,7 +31,13 @@ async function run() {
       const binDir = "bin";
       await tc.downloadTool(izunaBuilderUrl, binDir);
       console.log(binDir + '/' + izunaBuilderExe);
-      exec.exec('ls', [binDir]);
+      let myOutput = ''
+      const options = { listeners: { stdout: (data: Buffer) => { myOutput += data.toString() } } };
+      exec.exec('ls', [binDir], options);
+      console.log("res1: " + myOutput);
+      myOutput = "";
+      exec.exec('ls', [binDir + "/*"], options);
+      console.log("res2: " + myOutput);
       exec.exec('chmod', ['+x', binDir + '/' + izunaBuilderExe], { silent: true });
       const cachedPath = await tc.cacheFile(binDir, izunaBuilderExe, izunaBuilderExe, izunaBuilderVersion);
       core.addPath(cachedPath);
