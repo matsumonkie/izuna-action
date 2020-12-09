@@ -52,8 +52,8 @@ async function run() {
 
     const hieDirectory = core.getInput('hieDirectory');
     console.log("5");
-    await exec.exec('ls', ["bin"]);
     await exec.exec('pwd', []);
+    await exec.exec('ls', ["-a", izunaBuilderExeFullPath]);
     await exec.exec(izunaBuilderExeFullPath,
                     [ '--hie-directory=' + hieDirectory,
                       '--user=' + project.user,
