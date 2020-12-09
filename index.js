@@ -2,7 +2,6 @@ import * as path from 'path';
 
 const core = require('@actions/core');
 const github = require('@actions/github');
-const io = require('@actions/io');
 const exec = require('@actions/exec');
 
 async function run() {
@@ -12,7 +11,7 @@ async function run() {
       repo: core.getInput("repository"),
       packageName: core.getInput('package'),
       ghcVersion: core.getInput('ghcVersion'),
-      hieDirectory: = core.getInput('hieDirectory'),
+      hieDirectory: core.getInput('hieDirectory'),
       commitId: github.context.payload.pull_request.head.sha
     };
     console.log(`project: ${JSON.stringify(project)}`);
