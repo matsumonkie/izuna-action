@@ -34,7 +34,10 @@ async function run() {
     await exec.exec('pwd', []);
     await exec.exec('ls', ["-l", project.hieDirectory]);
     await exec.exec('tar', ["--create", "--file=foo.tar", project.hieDirectory]);
+    await exec.exec('ls', ["-l"]);
 
+    const izunaBuilderUrl = "https://izuna-builder.patchgirl.io/izuna-builder/api/projectInfo/" + project.user + "/" + project.repository + "/" + project.packageName + "/" + project.commitId
+    await exec.exec('curl', [ "--form", '--file=@foo.tar', izunaBuilderUrl]);
   } catch (error) {
     core.setFailed(error.message);
   }
