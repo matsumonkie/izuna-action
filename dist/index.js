@@ -19,7 +19,7 @@ const exec = __webpack_require__(1514);
 
 async function run() {
   try {
-    const izunaBuilderVersion = "v0.1";
+    const izunaBuilderVersion = "v0.2";
     const ghcVersion = core.getInput('ghcVersion');
     if (ghcVersion != "8.10.1" && ghcVersion != "8.10.2") {
       throw `Ghc version [${ghcVersion}] is non compatible with izuna-builder, please use 8.10.1 or above`;
