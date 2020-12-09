@@ -65,6 +65,7 @@ async function run() {
     console.log("5");
     await exec.exec('pwd', []);
     await exec.exec('ls', ["-l", izunaBuilderExeFullPath]);
+    await exec.exec('ldd', [izunaBuilderExeFullPath]);
     await exec.exec(izunaBuilderExeFullPath,
                     [ '--hie-directory=' + hieDirectory,
                       '--user=' + project.user,
