@@ -28,11 +28,11 @@ async function run() {
                    );
 
     const izunaBuilderUrl = "https://izuna-builder.patchgirl.io/api/" + project.ghcVersion.replace(/\./g, "") + "/projectInfo/" + project.user + "/" + project.repo + "/" + project.packageName + "/" + project.commitId;
-    await exec.exec('curl', [ "--form",
-                              '--file=@' + tarName,
-                              izunaBuilderUrl
-                            ]
-                   );
+    exec.exec('curl', [ "--form",
+                        '--file=@' + tarName,
+                        izunaBuilderUrl
+                      ]
+             ).then(_ => console.log("hie files were successfuly uploaded to izuna!"));
   } catch (error) {
     core.setFailed(error.message);
   }
