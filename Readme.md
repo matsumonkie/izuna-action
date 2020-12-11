@@ -34,7 +34,7 @@ Note that ghcVersion can only be 8.10.1 for now. 8.10.2 will be available soon.
 
 ## Example usage
 
-[izuna-example]() is using this github-action. You might want to check the (main.yaml)[https://github.com/matsumonkie/izuna-example/blob/main/.github/workflows/main.yml#L39-L46] file for a complete usage!
+[izuna-example](https://github.com/matsumonkie/izuna-example/) is using this github-action. You might want to check the [main.yaml](https://github.com/matsumonkie/izuna-example/blob/main/.github/workflows/main.yml#L39-L46) file for a complete usage!
 
 ## Build the action
 
