@@ -15,22 +15,27 @@ const core = __webpack_require__(186);
 const github = __webpack_require__(438);
 const exec = __webpack_require__(514);
 
+function getCommitId() {
+  const pullRequestId = github?.context?.payload?.pull_request?.head?.sha;
+  const mergeCommitId = github.sha;
+
+  return pullRequestId || mergeCommitId;
+}
+
 async function run() {
   try {
     const [user, repo] = process.env.GITHUB_REPOSITORY.split('/');
+
     var project = {
       user: user,
       repo: repo,
       packageName: core.getInput('package'),
       ghcVersion: core.getInput('ghcVersion'),
       hieDirectory: core.getInput('hieDirectory'),
-      commitId: process.env.GITHUB_SHA
+      commitId: getCommitId()
     };
     console.log(`project: ${JSON.stringify(project)}`);
     console.log(`project: ${JSON.stringify(process.env)}`);
-    console.log('###');
-    console.log(`project: ${JSON.stringify(process)}`);
-
     if (project.ghcVersion != "8.10.1" && project.ghcVersion != "8.10.2") {
       throw `Ghc version [${project.ghcVersion}] is non compatible with izuna-builder, please use 8.10.1 or above`;
     }
