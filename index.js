@@ -5,10 +5,17 @@ const github = require('@actions/github');
 const exec = require('@actions/exec');
 
 function getCommitId() {
-  const pullRequestId = github?.context?.payload?.pull_request?.head?.sha;
-  const mergeCommitId = github.sha;
-
-  return pullRequestId || mergeCommitId;
+  if(github.context &&
+     github.context.payload &&
+     github.context.payload.pull_request &&
+     github.context.payload.pull_request.head &&
+     github.context.payload.pull_request.head.sha) {
+    // we are in a pull request context
+    return github.context.payload.pull_request.head.sha;
+  } else {
+    // we are merging are pull request
+    return github.sha;
+  }
 }
 
 async function run() {

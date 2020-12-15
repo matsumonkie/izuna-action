@@ -16,10 +16,17 @@ const github = __webpack_require__(438);
 const exec = __webpack_require__(514);
 
 function getCommitId() {
-  const pullRequestId = github?.context?.payload?.pull_request?.head?.sha;
-  const mergeCommitId = github.sha;
-
-  return pullRequestId || mergeCommitId;
+  if(github.context &&
+     github.context.payload &&
+     github.context.payload.pull_request &&
+     github.context.payload.pull_request.head &&
+     github.context.payload.pull_request.head.sha) {
+    // we are in a pull request context
+    return github.context.payload.pull_request.head.sha;
+  } else {
+    // we are merging are pull request
+    return github.sha;
+  }
 }
 
 async function run() {
