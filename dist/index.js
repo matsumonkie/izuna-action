@@ -25,12 +25,12 @@ function getCommitId() {
     console.log('pullrequest commit id');
     console.log(github.context.payload.pull_request.head.sha)
     return github.context.payload.pull_request.head.sha;
-  } else {
-    // we are merging are pull request
+  } else if (github.context && github.context.eventName === 'push' && github.context.sha) {
+    // when we are pushing a commit outside of a PR (e.g: merging a branch)
     console.log('merge commit id');
     console.log(`${JSON.stringify(github)}`)
-    console.log(github.sha);
-    return github.sha;
+    console.log(github.context.sha);
+    return github.context.sha;
   }
 }
 
