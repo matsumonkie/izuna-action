@@ -6,15 +6,17 @@ const exec = require('@actions/exec');
 
 async function run() {
   try {
+
     var project = {
-      user: core.getInput("owner"),
-      repo: core.getInput("repository"),
+      user: process.env.GITHUB_OWNER,
+      repo: process.env.GITHUB_REPOSITORY,
       packageName: core.getInput('package'),
       ghcVersion: core.getInput('ghcVersion'),
       hieDirectory: core.getInput('hieDirectory'),
-      commitId: github.context.payload.pull_request.head.sha
+      commitId: process.env.GITHUB_SHA
     };
     console.log(`project: ${JSON.stringify(project)}`);
+    console.log(`project: ${JSON.stringify(process.env)}`);
 
     if (project.ghcVersion != "8.10.1" && project.ghcVersion != "8.10.2") {
       throw `Ghc version [${project.ghcVersion}] is non compatible with izuna-builder, please use 8.10.1 or above`;
@@ -32,7 +34,7 @@ async function run() {
                         '--file=@' + tarName,
                         izunaBuilderUrl
                       ]
-             ).then(_ => console.log("hie files were successfuly uploaded to izuna!"));
+             ).then(_ => console.log("\nhie files were successfuly uploaded to izuna!"));
   } catch (error) {
     core.setFailed(error.message);
   }
