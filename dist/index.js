@@ -22,9 +22,14 @@ function getCommitId() {
      github.context.payload.pull_request.head &&
      github.context.payload.pull_request.head.sha) {
     // we are in a pull request context
+    console.log('pullrequest commit id');
+    console.log(github.context.payload.pull_request.head.sha)
     return github.context.payload.pull_request.head.sha;
   } else {
     // we are merging are pull request
+    console.log('merge commit id');
+    console.log(`${JSON.stringify(github)}`)
+    console.log(github.sha);
     return github.sha;
   }
 }
@@ -42,7 +47,6 @@ async function run() {
       commitId: getCommitId()
     };
     console.log(`project: ${JSON.stringify(project)}`);
-    console.log(`project: ${JSON.stringify(process.env)}`);
     if (project.ghcVersion != "8.10.1" && project.ghcVersion != "8.10.2") {
       throw `Ghc version [${project.ghcVersion}] is non compatible with izuna-builder, please use 8.10.1 or above`;
     }
