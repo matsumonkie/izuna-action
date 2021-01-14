@@ -39,6 +39,7 @@ async function run() {
       packageName: core.getInput('package'),
       ghcVersion: core.getInput('ghcVersion'),
       hieDirectory: core.getInput('hieDirectory'),
+      projectRoot: core.getInput('projectRoot'),
       commitId: getCommitId()
     };
     console.log(`project: ${JSON.stringify(project)}`);
@@ -53,7 +54,17 @@ async function run() {
                            ]
                    );
 
-    const izunaBuilderUrl = "https://izuna-builder.izuna.app/api/" + project.ghcVersion.replace(/\./g, "") + "/projectInfo/" + project.user + "/" + project.repo + "/" + project.packageName + "/" + project.commitId;
+    const ghcVersion = project.ghcVersion.replace(/\./g, "");
+    const izunaBuilderUrl = path__WEBPACK_IMPORTED_MODULE_0__.join( "https://izuna-builder.izuna.app",
+                                       "api",
+                                       "projectInfo",
+                                       ghcVersion,
+                                       project.user,
+                                       project.repo,
+                                       project.packageName,
+                                       project.commitId,
+                                       project.projectRoot
+                                     );
     exec.exec('curl', [ "--form",
                         '--file=@' + tarName,
                         izunaBuilderUrl

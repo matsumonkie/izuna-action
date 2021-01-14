@@ -8,9 +8,11 @@ inputs:
     description: 'Version of Ghc used'
     required: true
   hieDirectory:
-    description: 'Where the hie files are stored'
+    description: 'Where the hie files are stored (usually `./.hie/` for regular projects)'
     required: true
-    default: '.hie'
+  projectRoot:
+    description: 'Where your project is stored (usually `.` for regular projects)'
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'
