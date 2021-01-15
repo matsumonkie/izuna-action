@@ -1,9 +1,6 @@
 name: 'izuna-action'
 description: 'Run izuna'
 inputs:
-  package:
-    description: 'Name of the package'
-    required: true
   ghcVersion:
     description: 'Version of Ghc used'
     required: true

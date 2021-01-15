@@ -25,7 +25,6 @@ async function run() {
     var project = {
       user: user,
       repo: repo,
-      packageName: core.getInput('package'),
       ghcVersion: core.getInput('ghcVersion'),
       hieDirectory: core.getInput('hieDirectory'),
       projectRoot: core.getInput('projectRoot'),
@@ -50,7 +49,6 @@ async function run() {
                                        ghcVersion,
                                        project.user,
                                        project.repo,
-                                       project.packageName,
                                        project.commitId,
                                        project.projectRoot
                                      );
