@@ -3,6 +3,9 @@ import * as path from 'path';
 const core = require('@actions/core');
 const github = require('@actions/github');
 const exec = require('@actions/exec');
+const axios = require('axios');
+const FormData = require('form-data');
+const fs = require('fs');
 
 function getCommitId() {
   if(github.context &&
@@ -52,7 +55,6 @@ async function createTar (project, tarName) {
 }
 
 async function sendTarToIzuna(project, tarName) {
-  try {
   const ghcVersion = project.ghcVersion.replace(/\./g, "");
   const izunaBuilderUrl = path.join( "https://izuna-builder.izuna.app",
                                      "api",
@@ -63,15 +65,17 @@ async function sendTarToIzuna(project, tarName) {
                                      project.commitId,
                                      project.projectRoot
                                    );
-  exec.exec('curl', [ "--form",
-                      '--file=@' + tarName,
-                      izunaBuilderUrl
-                    ]
-           ).then(_ => console.log("\nhie files were successfuly uploaded to izuna!"));
-  } catch (error) {
-    console.error('Could not save project info to izuna server');
-    throw error;
-  }
+
+  const form = new FormData();
+  form.append(tarName, fs.createReadStream(tarName));
+  await axios
+    .post(izunaBuilderUrl, form)
+    .then((response) => {
+      if(response.status !== 200) {
+        console.error("Could not upload project information to izuna server");
+        throw "Could not upload project information to izuna server";
+      }
+    });
 }
 
 run();
