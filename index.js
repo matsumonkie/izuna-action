@@ -36,11 +36,29 @@ async function run() {
     }
 
     const tarName = "izuna.tar";
-    await exec.exec('tar', [ "--create",
+
+    let myOutput = '';
+    let myError = '';
+    const options = {};
+    options.listeners = {
+      stdout: (data) => {},
+      stderr: (data) => {
+        myError += data.toString();
+      }
+    };
+    options.cwd = '.';
+
+    const { stdout, stderr } =
+          await exec.exec( 'tar',
+                           [ "--create",
                              "--file=" + tarName,
                              project.hieDirectory
-                           ]
-                   );
+                           ],
+                           options
+                         );
+    if(stderr) {
+      throw `Could not create tar archive: ${stderr}`;
+    }
 
     const ghcVersion = project.ghcVersion.replace(/\./g, "");
     const izunaBuilderUrl = path.join( "https://izuna-builder.izuna.app",
