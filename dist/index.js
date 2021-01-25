@@ -47,22 +47,7 @@ async function run() {
     }
     const tarName = "izuna.tar";
     await createTar(project, tarName);
-
-    const ghcVersion = project.ghcVersion.replace(/\./g, "");
-    const izunaBuilderUrl = path__WEBPACK_IMPORTED_MODULE_0__.join( "https://izuna-builder.izuna.app",
-                                       "api",
-                                       "projectInfo",
-                                       ghcVersion,
-                                       project.user,
-                                       project.repo,
-                                       project.commitId,
-                                       project.projectRoot
-                                     );
-    exec.exec('curl', [ "--form",
-                        '--file=@' + tarName,
-                        izunaBuilderUrl
-                      ]
-             ).then(_ => console.log("\nhie files were successfuly uploaded to izuna!"));
+    await sendTarToIzuna(project, tarName);
   } catch (error) {
     core.setFailed(error.message);
   }
@@ -72,7 +57,30 @@ async function createTar (project, tarName) {
   try {
     await exec.exec('tar', [ "--create", "--file=" + tarName, project.hieDirectory ]);
   } catch(error) {
-    console.error `Could not create tar archive for izuna. Either the hieDirectory (${project.hieDirectory}) parameter is wrong or the hie files were not generated`;
+    console.error(`Could not create tar archive for izuna. Either the hieDirectory parameter is wrong or the hie files were not generated`);
+    throw error;
+  }
+}
+
+async function sendTarToIzuna(project, tarName) {
+  try {
+  const ghcVersion = project.ghcVersion.replace(/\./g, "");
+  const izunaBuilderUrl = path__WEBPACK_IMPORTED_MODULE_0__.join( "https://izuna-builder.izuna.app",
+                                     "api",
+                                     "projectInfo2",
+                                     ghcVersion,
+                                     project.user,
+                                     project.repo,
+                                     project.commitId,
+                                     project.projectRoot
+                                   );
+  exec.exec('curl', [ "--form",
+                      '--file=@' + tarName,
+                      izunaBuilderUrl
+                    ]
+           ).then(_ => console.log("\nhie files were successfuly uploaded to izuna!"));
+  } catch (error) {
+    console.error('Could not save project info to izuna server');
     throw error;
   }
 }
