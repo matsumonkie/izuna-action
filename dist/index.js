@@ -72,7 +72,7 @@ async function createTar (project, tarName) {
   try {
     await exec.exec('tar', [ "--create", "--file=" + tarName, project.hieDirectory ]);
   } catch(error) {
-    throw `Could not create tar archive for izuna. Either the hieDirectory parameter is wrong or the hie files were not generated - ${stderr}`;
+    throw 'Could not create tar archive for izuna. Either the hieDirectory parameter is wrong or the hie files were not generated';
   }
 }
 
