@@ -72,9 +72,7 @@ async function sendTarToIzuna(project, tarName) {
                             );
   const url = baseUrl + pathname;
   const form = new FormData();
-  form.append("file", fs.createReadStream(tarName));
-  console.log("url", url);
-  console.log("form", form);
+  form.append("file", fs.createReadStream(path.join(project.hieDirectory, tarName)));
   try {
     const response = await axios.post(url, form)
     if(response.status === 200) {
