@@ -38,8 +38,9 @@ async function run() {
       throw `Ghc version [${project.ghcVersion}] is non compatible with izuna-builder, please use 8.10.1 or above`;
     }
     const tarName = "izuna.tar";
-    await createTar(project, tarName);
-    await sendTarToIzuna(project, tarName);
+    if(createTar(project, tarName)) {
+      sendTarToIzuna(project, tarName);
+    }
   } catch (error) {
     core.setFailed(error.message);
   }
@@ -48,8 +49,10 @@ async function run() {
 async function createTar(project, tarName) {
   try {
     await exec.exec('tar', [ "--create", "--file=" + tarName, project.hieDirectory ]);
+    return true;
   } catch(error) {
     core.setFailed('Could not create tar archive for izuna. Either the hieDirectory parameter is wrong or the hie files were not generated');
+    return false;
   }
 }
 
