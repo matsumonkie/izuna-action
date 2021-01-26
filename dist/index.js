@@ -92,8 +92,8 @@ async function sendTarToIzuna(project, tarName) {
       core.setFailed(`Could not upload project information to izuna server, url: ${url}, response: ${response}`);
       return false;
     }
-  } catch {
-    core.setFailed(`Could not upload project information to izuna server, url: ${url}, response: ${response}`);
+  } catch(error) {
+    core.setFailed(`Could not upload project information to izuna server, url: ${url}, error: ${error}`);
     return false;
   }
 }
