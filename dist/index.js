@@ -74,7 +74,7 @@ async function sendTarToIzuna(project, tarName) {
   const ghcVersion = project.ghcVersion.replace(/\./g, "");
   const baseUrl = 'https://izuna-builder.izuna.app';
   const pathname = path__WEBPACK_IMPORTED_MODULE_0__.join("/api",
-                             "projectInfo2",
+                             "projectInfo",
                              ghcVersion,
                              project.user,
                              project.repo,
