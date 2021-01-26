@@ -70,7 +70,7 @@ async function sendTarToIzuna(project, tarName) {
                                      project.commitId,
                                      project.projectRoot
                                    );
-
+  console.log(`url: ${izunaBuilderUrl}`);
   const form = new FormData();
   form.append(tarName, fs.createReadStream(tarName));
   const response = await axios.post(izunaBuilderUrl, form)
