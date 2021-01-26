@@ -62,15 +62,15 @@ async function createTar(project, tarName) {
 async function sendTarToIzuna(project, tarName) {
   const ghcVersion = project.ghcVersion.replace(/\./g, "");
   const baseUrl = 'https://izuna-builder.izuna.app';
-  const path = path.join("/api",
-                         "projectInfo2",
-                         ghcVersion,
-                         project.user,
-                         project.repo,
-                         project.commitId,
-                         project.projectRoot
-                        );
-  const url = baseUrl + path;
+  const pathname = path.join("/api",
+                             "projectInfo2",
+                             ghcVersion,
+                             project.user,
+                             project.repo,
+                             project.commitId,
+                             project.projectRoot
+                            );
+  const url = baseUrl + pathname;
   console.log(`url: ${url}`);
   const form = new FormData();
   form.append(tarName, fs.createReadStream(tarName));
