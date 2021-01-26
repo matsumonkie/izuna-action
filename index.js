@@ -37,8 +37,11 @@ async function run() {
     if (project.ghcVersion != "8.10.1" && project.ghcVersion != "8.10.2") {
       throw `Ghc version [${project.ghcVersion}] is non compatible with izuna-builder, please use 8.10.1 or above`;
     }
+    console.log("creating archive");
     const tarName = "izuna.tar";
-    if(createTar(project, tarName)) {
+    const success = await createTar(project, tarName);
+    if(success) {
+      console.log("sending archive");
       sendTarToIzuna(project, tarName);
     }
   } catch (error) {
