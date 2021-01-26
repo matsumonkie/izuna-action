@@ -71,15 +71,19 @@ async function sendTarToIzuna(project, tarName) {
                              project.projectRoot
                             );
   const url = baseUrl + pathname;
-  console.log(`url: ${url}`);
   const form = new FormData();
   form.append(tarName, fs.createReadStream(tarName));
-  const response = await axios.post(url, form)
-  if(response.status !== 200) {
-    core.setFailed('Could not upload project information to izuna server');
+  try {
+    const response = await axios.post(url, form)
+    if(response.status === 200) {
+      return true;
+    } else {
+      core.setFailed(`Could not upload project information to izuna server, url: ${url}, response: ${response}`);
+      return false;
+    }
+  } catch {
+    core.setFailed(`Could not upload project information to izuna server, url: ${url}, response: ${response}`);
     return false;
-  } else {
-    return true;
   }
 }
 
