@@ -3,9 +3,8 @@ import * as path from 'path';
 const core = require('@actions/core');
 const github = require('@actions/github');
 const exec = require('@actions/exec');
-const axios = require('axios');
-const FormData = require('form-data');
 const fs = require('fs');
+const request = require('request');
 
 function getCommitId() {
   if(github.context &&
@@ -71,20 +70,13 @@ async function sendTarToIzuna(project, tarName) {
                              project.projectRoot
                             );
   const url = baseUrl + pathname;
-  const form = new FormData();
-  form.append("file", fs.createReadStream(path.join(project.hieDirectory, tarName)));
-  try {
-    const response = await axios.post(url, form)
-    if(response.status === 200) {
-      return true;
-    } else {
-      core.setFailed(`Could not upload project information to izuna server, url: [${url}], response: ${response}`);
-      return false;
+  const formData = { my_file: fs.createReadStream(tarName)  };
+  await request.post({ url: url, formData: formData }, (err, httpResponse, body) => {
+    if (err) {
+      core.setFailed(`Could not upload project information to izuna server, url: [${url}], error: ${err}`);
     }
-  } catch(error) {
-    core.setFailed(`Could not upload project information to izuna server, url: [${url}], error: ${error}`);
-    return false;
-  }
+    console.log('Upload successful! Server responded with:', body);
+  });
 }
 
 run();
