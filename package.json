@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prepare": "ncc build index.js -o dist",
+    "foo": "node run foo.js",
     "all": "npm run prepare",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
