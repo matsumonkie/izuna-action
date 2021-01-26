@@ -72,19 +72,20 @@ async function createTar(project, tarName) {
 
 async function sendTarToIzuna(project, tarName) {
   const ghcVersion = project.ghcVersion.replace(/\./g, "");
-  const izunaBuilderUrl = path__WEBPACK_IMPORTED_MODULE_0__.join( "https://izuna-builder.izuna.app",
-                                     "api",
-                                     "projectInfo2",
-                                     ghcVersion,
-                                     project.user,
-                                     project.repo,
-                                     project.commitId,
-                                     project.projectRoot
-                                   );
-  console.log(`url: ${izunaBuilderUrl}`);
+  const baseUrl = 'https://izuna-builder.izuna.app';
+  const path = path.join("/api",
+                         "projectInfo2",
+                         ghcVersion,
+                         project.user,
+                         project.repo,
+                         project.commitId,
+                         project.projectRoot
+                        );
+  const url = baseUrl + path;
+  console.log(`url: ${url}`);
   const form = new FormData();
   form.append(tarName, fs.createReadStream(tarName));
-  const response = await axios.post(izunaBuilderUrl, form)
+  const response = await axios.post(url, form)
   if(response.status !== 200) {
     core.setFailed('Could not upload project information to izuna server');
     return false;
