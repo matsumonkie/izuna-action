@@ -56,12 +56,11 @@ async function run() {
   }
 }
 
-async function createTar (project, tarName) {
+async function createTar(project, tarName) {
   try {
     await exec.exec('tar', [ "--create", "--file=" + tarName, project.hieDirectory ]);
   } catch(error) {
-    console.error(`Could not create tar archive for izuna. Either the hieDirectory parameter is wrong or the hie files were not generated`);
-    throw error;
+    core.setFailed('Could not create tar archive for izuna. Either the hieDirectory parameter is wrong or the hie files were not generated');
   }
 }
 
