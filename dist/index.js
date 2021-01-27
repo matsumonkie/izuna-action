@@ -44,7 +44,10 @@ async function run() {
       commitId: getCommitId()
     };
     console.log(`project: ${JSON.stringify(project)}`);
-    if (project.ghcVersion != "8.10.1" && project.ghcVersion != "8.10.2") {
+    if ( project.ghcVersion != "8.10.1" &&
+         project.ghcVersion != "8.10.2" &&
+         project.ghcVersion != "8.10.3"
+       ) {
       throw `Ghc version [${project.ghcVersion}] is non compatible with izuna-builder, please use 8.10.1 or above`;
     }
     console.log("creating archive");
